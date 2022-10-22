@@ -6,11 +6,15 @@ public class Player_ctrl : MonoBehaviour
 {
     public GameObject ptank;
     public GameObject pturret;
-    public GameObject camera_pos;
+    public GameObject pcannon;
+    public GameObject bullet_prefab;
+
+    public Camera camera_pos;
 
     private float movespeed = 15.0f;
     private float headrotationspeed = 22.0f;
     private float bodyrotationspeed = 22.0f;
+    
 
     private bool isMoving = false;
 
@@ -25,10 +29,10 @@ public class Player_ctrl : MonoBehaviour
     void Update()
     {
         BodyMove();
-        HeadMove();
+        TurretMove();
     }
 
-    void BodyMove() // 탱크 이동
+    void BodyMove() // 탱크 이동 V 
     {
         Vector3 ptank_position = ptank.transform.position;
 
@@ -46,13 +50,25 @@ public class Player_ctrl : MonoBehaviour
         this.transform.Rotate(new Vector3(0, y * bodyrotationspeed * Time.deltaTime, 0));
     }
 
-    void HeadMove()// 포탑 구현 쳐다보게하기!!!
+    void TurretMove()// 포탑 구현 쳐다보게하기!!! V
     {
-        Vector3 point = Camera.main.WorldToScreenPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, - Camera.main.transform.position.z));
-        Debug.Log(point);
+        Ray ray = camera_pos.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit_res;
+
+        if(Physics.Raycast(ray, out hit_res))
+        {
+            Vector3 mouseDir = new Vector3(hit_res.point.x, pcannon.transform.position.y, hit_res.point.z) - transform.position;
+            pturret.transform.forward = mouseDir;
+        }
     }
-    void CameraLook()
+
+    void OnFire() // 발사 구현하기
     {
 
     }
+
+    void CameraLook()
+    {
+
+    } //카메라 아직 구현 못함 
 }
