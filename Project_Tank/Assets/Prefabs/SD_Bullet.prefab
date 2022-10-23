@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8329981664100600012}
   - component: {fileID: 8329981664097700076}
   - component: {fileID: 8329981664098699820}
-  - component: {fileID: 2781350074110008919}
+  - component: {fileID: 5484952646855458028}
   m_Layer: 0
   m_Name: SD_Bullet_Base
   m_TagString: Untagged
@@ -167,7 +167,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2781350074110008919
+--- !u!64 &5484952646855458028
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -22,7 +22,7 @@ public class Player_ctrl : MonoBehaviour
     [SerializeField]
     private float world_timer = 0.0f;
     private float reload_timer = 5.0f;
-    private float firepower = 20000.0f; // 포탄에 가하는 힘
+    private float firepower = 2000.0f; // 포탄에 가하는 힘 //이전엔 20000
     private float movespeed = 15.0f; // 탱크 앞 뒤 이동속도
     private float headrotationspeed = 1.0f; // 포탑 회전속도
     private float bodyrotationspeed = 22.0f; // 차체 회전속도

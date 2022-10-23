@@ -9,6 +9,6 @@ public class Bullet_ctrl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if (collision.transform.tag == "Enemy")
+        //if (collision.transform.tag == "Tank")
     }
 }
