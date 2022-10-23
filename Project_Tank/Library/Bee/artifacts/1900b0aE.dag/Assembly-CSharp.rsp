@@ -369,6 +369,7 @@
 "Assets/JMO Assets/WarFX/Scripts/WFX_LightFlicker.cs"
 "Assets/JMO Assets/WarFX/Spawn System/CFX_SpawnSystem.cs"
 "Assets/Script/Bullet_ctrl.cs"
+"Assets/Script/Enemy_ctrl.cs"
 "Assets/Script/Player_ctrl.cs"
 -langversion:9.0
 
