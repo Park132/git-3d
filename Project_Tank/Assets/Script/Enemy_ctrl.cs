@@ -17,7 +17,10 @@ public class Enemy_ctrl : MonoBehaviour
     public ParticleSystem effectdead1;
     public ParticleSystem effectdead2;
 
-
+    private void Start()
+    {
+        eturret.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -38,13 +41,14 @@ public class Enemy_ctrl : MonoBehaviour
 
     void EffectDead() // Á» ´õ ¼ÕºÁ¾ßµÊ
     {
+        eturret.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         while (i < 1)
         {
             Instantiate(effectdead1, effect_pos.transform.position, effect_pos.transform.rotation);
             i++;
         }
 
-        if(dead_timer >= 5.0f)
+        if(dead_timer >= 3.0f)
         {
             
             while (i < 2)
@@ -52,12 +56,12 @@ public class Enemy_ctrl : MonoBehaviour
                 Instantiate(effectdead2, etank.transform.position, etank.transform.rotation);
                 eturret.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(0f, 3f), Random.Range(-1f, 1f)).normalized * 1000f);
                 eturret.gameObject.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 1000f);
-                //eturret.transform.Rotate(new Vector3(eturret.transform.rotation.x + Random.Range(-1f, 1f), eturret.transform.rotation.y + Random.Range(-1f, 1f), eturret.transform.rotation.z + Random.Range(-1f, 1f)).normalized*20f);
+                
                 i++;
             }
         }
 
-        if (dead_timer >= 15.0f)
+        if (dead_timer >= 10.0f)
         {
             Destroy(this.gameObject);
         }

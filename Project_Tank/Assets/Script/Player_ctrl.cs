@@ -12,6 +12,11 @@ public class Player_ctrl : MonoBehaviour
     public GameObject bullet_spawn_point;
 
     public ParticleSystem bullet_spawn_effect;
+
+    public ParticleSystem moving_effect;
+    public GameObject sposition_l;
+    public GameObject sposition_r;
+
     //연막효과도 넣기
 
     public Camera camera_pos;
@@ -24,7 +29,7 @@ public class Player_ctrl : MonoBehaviour
     private float reload_timer = 5.0f;
     private float firepower = 2000.0f; // 포탄에 가하는 힘 //이전엔 20000
     private float movespeed = 15.0f; // 탱크 앞 뒤 이동속도
-    private float headrotationspeed = 1.0f; // 포탑 회전속도
+    private float headrotationspeed = 2.0f; // 포탑 회전속도
     private float bodyrotationspeed = 22.0f; // 차체 회전속도
     
 
@@ -55,6 +60,18 @@ public class Player_ctrl : MonoBehaviour
         float x = Input.GetAxis("Vertical");
         float y = Input.GetAxis("Horizontal");
 
+        if (isMoving)
+        {
+            sposition_l.SetActive(true);
+            sposition_r.SetActive(true);
+        }
+        else
+        {
+            sposition_l.SetActive(false);
+            sposition_r.SetActive(false);
+        }
+            
+
         if (x != 0)
         {
             isMoving = true;
@@ -66,17 +83,17 @@ public class Player_ctrl : MonoBehaviour
         this.transform.Rotate(new Vector3(0, y * bodyrotationspeed * Time.deltaTime, 0));
     }
 
-    void TurretMove()// 포탑 구현 쳐다보게하기!!! delay를 어떻게 줄까 V
+    void TurretMove()// 포탑 구현 쳐다보게하기!!! 포탑 아래 쳐다볼 때는 어떻게?
     {
         Ray ray = camera_pos.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit_res;
 
         if(Physics.Raycast(ray, out hit_res))
         {
-            Vector3 mouseDir = new Vector3(hit_res.point.x, pcannon.transform.position.y, hit_res.point.z) - transform.position;
+            Vector3 mouseDir = new Vector3(hit_res.point.x, hit_res.transform.position.y, hit_res.point.z) - transform.position; 
 
-            pturret.transform.rotation = Quaternion.LerpUnclamped(pturret.transform.rotation, Quaternion.LookRotation(mouseDir), headrotationspeed * Time.deltaTime);
-
+            // new Vector3(pcannon.transfrom.rotation.x, pturret.tranform.rotation.y, pturret.transform.z)
+            pturret.transform.rotation = Quaternion.Slerp(pturret.transform.rotation, Quaternion.LookRotation(mouseDir), headrotationspeed * Time.deltaTime);
             //pturret.transform.forward  = mouseDir;
         }
     }
