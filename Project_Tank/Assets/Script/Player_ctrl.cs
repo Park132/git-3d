@@ -53,7 +53,7 @@ public class Player_ctrl : MonoBehaviour
         CameraLook();
     }
 
-    void BodyMove() // ÅÊÅ© ÀÌµ¿ V 
+    void BodyMove() // ÅÊÅ© ÀÌµ¿ V , ¹®Á¦Á¡ ¹ß°ß ¶¥À¸·Î ²¨Áö´Â Çö»ó
     {
         Vector3 ptank_position = ptank.transform.position;
 
