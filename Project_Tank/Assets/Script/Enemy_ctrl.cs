@@ -10,6 +10,7 @@ public class Enemy_ctrl : MonoBehaviour
     public GameObject target;
     public GameObject rader; // 큰 원 콜라이더를 가진 emptyobject를 여기에 상속시켜 여기에 플레이어가 닿을시 추적하게 할 생각
     public GameObject ebsp; // 총알을 나가게 할 예정
+    public GameObject bullet_prefab; // 총알 프리팹
 
     public bool isFind = false; // 플레이어가 범위에 들어와 있는지 판단하게 해 주는 부울변수
 
@@ -20,7 +21,10 @@ public class Enemy_ctrl : MonoBehaviour
     public float eheadrotationspeed = 2.0f;
     public float eworld_timer = 0.0f;
     public float ereload_timer = 4.0f;
+    public float efirepower = 2000.0f;
 
+    // 발사 이펙트
+    public ParticleSystem bullet_spawn_effect;
 
     // 죽는 모습을 위한 파티클, 요소들
     public ParticleSystem penetrated;
@@ -100,8 +104,7 @@ public class Enemy_ctrl : MonoBehaviour
                 target = GameObject.FindGameObjectWithTag("Player");
                 if(eworld_timer >= ereload_timer)
                 {
-                    Debug.Log("check Fire");
-                    eworld_timer = 0f;
+                    OnFire();
                 }
             }
 
@@ -115,14 +118,21 @@ public class Enemy_ctrl : MonoBehaviour
         {
             Debug.Log("Didn't Find Player, yet");
         }
-
-
-        
         /* 부드럽지 않고 딱딱하게 됨, 일단은 남겨놓기 
         Vector3 target_position = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z) - eturret.transform.position;
 
         eturret.transform.forward = target_position;
         */
+    }
+
+    // 플레이어 스크립트의 발사 관련 함수
+    void OnFire() // 발사 구현하기 V 
+    {
+        GameObject bullet_prefabs = Instantiate(bullet_prefab, ebsp.transform.position, ebsp.transform.rotation);
+        ParticleSystem bullet_spawn_effect_prefabs = Instantiate(bullet_spawn_effect, ebsp.transform.position, ebsp.transform.rotation);
+
+        bullet_prefabs.gameObject.GetComponent<Rigidbody>().AddForce(ebsp.transform.forward * efirepower);
+        eworld_timer = 0;
     }
 
     /*
@@ -140,18 +150,7 @@ public class Enemy_ctrl : MonoBehaviour
     }
     */
 
-    /*
-     플레이어 스크립트의 발사 관련 함수
-    void OnFire() // 발사 구현하기 V 
-    {
-        if (Input.GetMouseButtonDown(0) && world_timer >= reload_timer)
-        {
-            GameObject bullet_prefabs = Instantiate(bullet_prefab, bullet_spawn_point.transform.position, bullet_spawn_point.transform.rotation);
-            ParticleSystem bullet_spawn_effect_prefabs = Instantiate(bullet_spawn_effect, bullet_spawn_point.transform.position, bullet_spawn_point.transform.rotation);
 
-            bullet_prefabs.gameObject.GetComponent<Rigidbody>().AddForce(bullet_spawn_point.transform.forward * firepower);
-            world_timer = 0;
-        }
-    }
-    */
+
+
 }

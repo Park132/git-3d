@@ -480,6 +480,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7589626244754281056, guid: 92c8b3da6083598479d678d925ba2890,
+        type: 3}
+      propertyPath: bullet_prefab
+      value: 
+      objectReference: {fileID: 8329981664100635886, guid: 1cd3ab1bbfbc7a74995bdd801793c8cd,
+        type: 3}
+    - target: {fileID: 7589626244754281056, guid: 92c8b3da6083598479d678d925ba2890,
+        type: 3}
+      propertyPath: bullet_spawn_effect
+      value: 
+      objectReference: {fileID: 19800004, guid: 084c6a87873fd6e4da7978a01aa18b34,
+        type: 3}
     - target: {fileID: 7589626244805393917, guid: 92c8b3da6083598479d678d925ba2890,
         type: 3}
       propertyPath: m_RootOrder
