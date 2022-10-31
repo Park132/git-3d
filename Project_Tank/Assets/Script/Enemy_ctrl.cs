@@ -41,8 +41,7 @@ public class Enemy_ctrl : MonoBehaviour
         Debug.Log(isFind);
 
         AttackPlayer();
-        EnemyFire();
-
+        
         if (Health <= 0f)
         {
             EffectDead();
@@ -92,10 +91,19 @@ public class Enemy_ctrl : MonoBehaviour
 
     void AttackPlayer()
     {
+        Debug.DrawRay(ebsp.transform.position, ebsp.transform.forward * 4000f, Color.red);
+
         try // 빨간 에러가 싫어서 찾지 못하는 경우를 예외처리함
         {
-            if (isFind) // 플레이어가 범위에 들어왔을 때 
+            if (isFind)
+            {
                 target = GameObject.FindGameObjectWithTag("Player");
+                if(eworld_timer >= ereload_timer)
+                {
+                    Debug.Log("check Fire");
+                    eworld_timer = 0f;
+                }
+            }
 
             // 천천히 움직이기 위해 이걸로 갑니다
             Vector3 target_position = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z) - eturret.transform.position;
@@ -107,6 +115,8 @@ public class Enemy_ctrl : MonoBehaviour
         {
             Debug.Log("Didn't Find Player, yet");
         }
+
+
         
         /* 부드럽지 않고 딱딱하게 됨, 일단은 남겨놓기 
         Vector3 target_position = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z) - eturret.transform.position;
@@ -115,19 +125,21 @@ public class Enemy_ctrl : MonoBehaviour
         */
     }
 
+    /*
     void EnemyFire()
     {
-        Debug.DrawRay(ebsp.transform.position, ebsp.transform.forward * 4000f, Color.red);
-
         if (isFind)
         {
             RaycastHit hit;
             if(Physics.Raycast(ebsp.transform.position, transform.forward, out hit) && eworld_timer >= ereload_timer)
             {
-                
+                Debug.Log("check!");
+                eworld_timer = 0.0f;
             }
         }
     }
+    */
+
     /*
      플레이어 스크립트의 발사 관련 함수
     void OnFire() // 발사 구현하기 V 
