@@ -24,7 +24,7 @@ public class System_ctrl : MonoBehaviour
     private void Start()
     {
         ButtonCtrl(false);
-        // GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         
     }
 
