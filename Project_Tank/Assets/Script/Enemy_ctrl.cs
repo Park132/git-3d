@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy_ctrl : MonoBehaviour
 {
@@ -15,9 +16,9 @@ public class Enemy_ctrl : MonoBehaviour
     public bool isFind = false; // 플레이어가 범위에 들어와 있는지 판단하게 해 주는 부울변수
 
     // 적 능력치
-    public float Health = 2.0f;
+    public float Health = 3.0f;
     public float movingspeed = 20.0f;
-    public float rotationspeed = 22.0f;
+    public float rotationspeed = 18.0f;
     public float eheadrotationspeed = 2.0f;
     public float eworld_timer = 0.0f;
     public float ereload_timer = 4.0f;
@@ -34,9 +35,15 @@ public class Enemy_ctrl : MonoBehaviour
     public int i = 0;
     private float dead_timer = 0f;
 
+    // 플레이어 추적을 위한 것들
+    NavMeshAgent agent;
+
     private void Start()
     {
         eturret.gameObject.GetComponent<Rigidbody>().isKinematic = true; // 살아있을 때 포탑을 몸통에 붙여놓기 위함
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = movingspeed;
+        agent.angularSpeed = rotationspeed;
     }
     // Update is called once per frame
     void Update()
@@ -58,6 +65,7 @@ public class Enemy_ctrl : MonoBehaviour
         {
             Health--;
             Instantiate(penetrated, collision.transform.position, collision.transform.rotation);
+            isFind = true;
         }
 
     }
@@ -66,6 +74,7 @@ public class Enemy_ctrl : MonoBehaviour
     {
         eturret.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         isFind = false; // 죽은 후 행동 정지
+        agent.enabled = false;
         while (i < 1)
         {
             Instantiate(effectdead1, effect_pos.transform.position, effect_pos.transform.rotation);
@@ -85,9 +94,10 @@ public class Enemy_ctrl : MonoBehaviour
             }
         }
 
-        if (dead_timer >= 10.0f)
+        if (dead_timer >= 7.0f)
         {
             Destroy(this.gameObject);
+            GameObject.FindGameObjectWithTag("System").GetComponent<System_ctrl>().eliminated_target += 1;
         }
         dead_timer += Time.deltaTime;
     }
@@ -101,6 +111,9 @@ public class Enemy_ctrl : MonoBehaviour
             if (isFind)
             {
                 target = GameObject.FindGameObjectWithTag("Player");
+                
+                agent.SetDestination(target.transform.position); // 플레이어 추적
+
                 if(eworld_timer >= ereload_timer)
                 {
                     OnFire();

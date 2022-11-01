@@ -29,8 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7589626244881079820}
+  m_Children: []
   m_Father: {fileID: 7589626244805393875}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -204,6 +203,7 @@ Transform:
   - {fileID: 7589626244805393913}
   - {fileID: 7589626244805393905}
   - {fileID: 7589626244805393907}
+  - {fileID: 7589626244881079820}
   m_Father: {fileID: 7589626244805393917}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2095,6 +2095,7 @@ MonoBehaviour:
   target: {fileID: 0}
   rader: {fileID: 7589626245591640432}
   ebsp: {fileID: 7589626246196279079}
+  bullet_prefab: {fileID: 0}
   isFind: 0
   Health: 1
   movingspeed: 20
@@ -2102,6 +2103,8 @@ MonoBehaviour:
   eheadrotationspeed: 2
   eworld_timer: 0
   ereload_timer: 4
+  efirepower: 2000
+  bullet_spawn_effect: {fileID: 0}
   penetrated: {fileID: 19800006, guid: a49596ebf788acd4ab1281bffea444b1, type: 3}
   effectdead1: {fileID: 19800002, guid: e3b931080c9262e408c0378d77443cb7, type: 3}
   effectdead2: {fileID: 19800008, guid: 1dbc518224e49f34095aab42fe05751a, type: 3}
@@ -2236,12 +2239,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7589626244881079827}
   m_LocalRotation: {x: -0.000000081460335, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.32000098, y: 1.8316667, z: -0.30373397}
+  m_LocalPosition: {x: 0.32000226, y: 1.8316664, z: -0.30373397}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7589626244805393869}
-  m_RootOrder: 0
+  m_Father: {fileID: 7589626244805393875}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7589626245591640432
 GameObject:

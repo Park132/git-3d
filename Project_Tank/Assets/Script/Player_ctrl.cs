@@ -12,7 +12,7 @@ public class Player_ctrl : MonoBehaviour
     public GameObject bullet_spawn_point;
 
     // 발사 관련
-    public float penetrate_possibility = 0.5f; // 도탄률
+    public float penetrate_possibility = 0.3f; // 도탄률
     public ParticleSystem bullet_spawn_effect;
     public ParticleSystem bullet_penetrated;
     public ParticleSystem bullet_ricochet;
@@ -30,9 +30,9 @@ public class Player_ctrl : MonoBehaviour
 
     [SerializeField]
     private float world_timer = 0.0f;
-    private float reload_timer = 5.0f;
+    public float reload_timer = 1.0f; // [접근 가능]
     private float firepower = 2000.0f; // 포탄에 가하는 힘 //이전엔 20000
-    private float movespeed = 100.0f; // 탱크 앞 뒤 이동속도
+    public float movespeed = 50.0f; // [접근 가능] / 탱크 앞 뒤 이동속도 
     private float headrotationspeed = 2.0f; // 포탑 회전속도
     private float bodyrotationspeed = 22.0f; // 차체 회전속도
     

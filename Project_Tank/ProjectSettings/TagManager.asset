@@ -9,6 +9,7 @@ TagManager:
   - Tank
   - Terrain
   - Obstacle
+  - System
   layers:
   - Default
   - TransparentFX
