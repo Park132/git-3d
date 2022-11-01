@@ -15,7 +15,7 @@ public class Enemy_ctrl : MonoBehaviour
     public bool isFind = false; // 플레이어가 범위에 들어와 있는지 판단하게 해 주는 부울변수
 
     // 적 능력치
-    public float Health = 1.0f;
+    public float Health = 2.0f;
     public float movingspeed = 20.0f;
     public float rotationspeed = 22.0f;
     public float eheadrotationspeed = 2.0f;
@@ -44,12 +44,12 @@ public class Enemy_ctrl : MonoBehaviour
         eworld_timer += Time.deltaTime;
         Debug.Log(isFind);
 
-        AttackPlayer();
         
         if (Health <= 0f)
-        {
             EffectDead();
-        }
+        else
+            AttackPlayer();
+
     }
 
     private void OnCollisionEnter(Collision collision) // 공격 받았을 때 플레이어를 찾아내는 기능을 구현해야함
@@ -60,13 +60,12 @@ public class Enemy_ctrl : MonoBehaviour
             Instantiate(penetrated, collision.transform.position, collision.transform.rotation);
         }
 
-        if (collision.transform.tag == "Player")
-            Debug.Log("Check_collision");
     }
 
     void EffectDead() // done.
     {
         eturret.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        isFind = false; // 죽은 후 행동 정지
         while (i < 1)
         {
             Instantiate(effectdead1, effect_pos.transform.position, effect_pos.transform.rotation);

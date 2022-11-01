@@ -11,17 +11,21 @@ public class Player_ctrl : MonoBehaviour
     public GameObject bullet_prefab;
     public GameObject bullet_spawn_point;
 
+    // 발사 관련
+    public float penetrate_possibility = 0.5f; // 도탄률
     public ParticleSystem bullet_spawn_effect;
+    public ParticleSystem bullet_penetrated;
+    public ParticleSystem bullet_ricochet;
 
+    //연막효과도 넣기
     public ParticleSystem moving_effect;
     public GameObject sposition_l;
     public GameObject sposition_r;
 
-    //연막효과도 넣기
 
     public Camera camera_pos;
 
-    public float Health = 100.0f; // 데미지 주는 것과 받는것, 방어력, 도탄 등의 알고리즘 생각해보기 
+    public float Health = 10.0f; // 데미지 주는 것과 받는것, 방어력, 도탄 등의 알고리즘 생각해보기 
     //적의 인공지능도 생각해보기
 
     [SerializeField]
@@ -116,5 +120,29 @@ public class Player_ctrl : MonoBehaviour
 
         camera_pos.transform.position = ptank.transform.position + offset;
         camera_pos.transform.LookAt(ptank.transform);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Bullet")
+        {
+            PenetratingAlgorithm(penetrate_possibility, collision);
+        }
+    }
+
+    void PenetratingAlgorithm(float possibility, Collision collision)
+    {
+        float x = Random.Range(0.0f, 1.0f);
+        
+        if(x<=possibility) // 도탄
+            Instantiate(bullet_ricochet, collision.transform.position, collision.transform.rotation);
+        else // 관통
+        {
+            Debug.Log("랜덤레인지의 x값 : " + x);
+            Debug.Log("플레이어 탱크의 체력 : " + Health);
+            Instantiate(bullet_penetrated, collision.transform.position, collision.transform.rotation);
+            Health--;
+        }
+
     }
 }
