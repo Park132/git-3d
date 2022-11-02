@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class System_ctrl : MonoBehaviour
 {
@@ -16,16 +17,17 @@ public class System_ctrl : MonoBehaviour
     public GameObject btn1;
     public GameObject btn2;
     public GameObject btn3;
+    public GameObject btn_main;
 
-    public GameObject player;
+    public GameObject player; // ui에 변수들을 출력하기 위함
 
     private int i = 0;
 
     private void Start()
     {
         ButtonCtrl(false);
+        btn_main.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
-        
     }
 
     // Update is called once per frame
@@ -33,9 +35,15 @@ public class System_ctrl : MonoBehaviour
     {
         Debug.Log("eliminated target : " + eliminated_target);
         Score.text = "eliminated target : " + eliminated_target.ToString() + " / " + winning_score;
-        Reload.text = "Reload time : " + player.GetComponent<Enemy_ctrl>().ereload_timer.ToString();
-        Health.text = "Health : " + player.GetComponent<Enemy_ctrl>().Health.ToString();
+        Reload.text = "Reload time : " + player.GetComponent<Player_ctrl>().reload_timer.ToString();
+        Health.text = "Health : " + player.GetComponent<Player_ctrl>().Health.ToString();
 
+        if (eliminated_target == 12)
+        {
+            btn_main.SetActive(true);
+            ButtonCtrl(false);
+            Time.timeScale = 0f;
+        }
         if (eliminated_target == winning_score)
         {
             do
@@ -45,8 +53,8 @@ public class System_ctrl : MonoBehaviour
                 Time.timeScale = 0;
             } while (i < 0);
         }
-
     }
+
 
     void ButtonCtrl(bool boolean)
     {
@@ -55,9 +63,14 @@ public class System_ctrl : MonoBehaviour
         btn3.SetActive(boolean);
     }
 
+    public void GoMain()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
+
     public void Click_R()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ctrl>().reload_timer -= 2.0f;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ctrl>().reload_timer -= 1.5f;
         Time.timeScale = 1;
         ButtonCtrl(false);
     }
