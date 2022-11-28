@@ -28,15 +28,15 @@ public class System_ctrl : MonoBehaviour
         ButtonCtrl(false);
         btn_main.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
+        Score.text = "eliminated target : " + eliminated_target.ToString() + " / " + winning_score;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("eliminated target : " + eliminated_target);
         Score.text = "eliminated target : " + eliminated_target.ToString() + " / " + winning_score;
-        Reload.text = "Reload time : " + player.GetComponent<Player_ctrl>().reload_timer.ToString();
-        Health.text = "Health : " + player.GetComponent<Player_ctrl>().Health.ToString();
+        Reload.text = "Reload time : " + GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ctrl>().reload_timer.ToString();
+        Health.text = "Health : " + GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ctrl>().Health.ToString();
 
         if (eliminated_target == 12)
         {
