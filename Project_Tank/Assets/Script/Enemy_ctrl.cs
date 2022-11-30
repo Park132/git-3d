@@ -35,11 +35,18 @@ public class Enemy_ctrl : MonoBehaviour
     public int i = 0;
     private float dead_timer = 0f;
 
+    // 사운드
+    AudioSource audio_s_enemy;
+    public AudioClip audio_fire;
+    public AudioClip audio_hit;
+
     // 플레이어 추적을 위한 것들
     NavMeshAgent agent;
 
     private void Start()
     {
+        audio_s_enemy = GetComponent<AudioSource>();
+
         eturret.gameObject.GetComponent<Rigidbody>().isKinematic = true; // 살아있을 때 포탑을 몸통에 붙여놓기 위함
         agent = GetComponent<NavMeshAgent>();
         agent.speed = movingspeed;
@@ -63,6 +70,9 @@ public class Enemy_ctrl : MonoBehaviour
     {
         if(collision.transform.tag == "Bullet")
         {
+            audio_s_enemy.clip = audio_hit;
+            audio_s_enemy.Play();
+
             Health--;
             Instantiate(penetrated, collision.transform.position, collision.transform.rotation);
             isFind = true;
@@ -140,6 +150,9 @@ public class Enemy_ctrl : MonoBehaviour
     // 플레이어 스크립트의 발사 관련 함수
     void OnFire() // 발사 구현하기 V 
     {
+        audio_s_enemy.clip = audio_fire;
+        audio_s_enemy.Play();
+
         GameObject bullet_prefabs = Instantiate(bullet_prefab, ebsp.transform.position, ebsp.transform.rotation);
         ParticleSystem bullet_spawn_effect_prefabs = Instantiate(bullet_spawn_effect, ebsp.transform.position, ebsp.transform.rotation);
 

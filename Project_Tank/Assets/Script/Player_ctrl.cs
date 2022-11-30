@@ -22,6 +22,11 @@ public class Player_ctrl : MonoBehaviour
     public GameObject sposition_l;
     public GameObject sposition_r;
 
+    // 사운드
+    AudioSource audios;
+    public AudioClip audio_fire;
+    public AudioClip audio_ground;
+    public AudioClip audio_hit;
 
     public Camera camera_pos;
 
@@ -44,6 +49,7 @@ public class Player_ctrl : MonoBehaviour
     void Start()
     {
         this.gameObject.GetComponent<Rigidbody>();
+        audios = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -106,6 +112,9 @@ public class Player_ctrl : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && world_timer >= reload_timer)
         {
+            audios.clip = audio_fire;
+            audios.Play();
+
             GameObject bullet_prefabs = Instantiate(bullet_prefab, bullet_spawn_point.transform.position, bullet_spawn_point.transform.rotation);
             ParticleSystem bullet_spawn_effect_prefabs = Instantiate(bullet_spawn_effect, bullet_spawn_point.transform.position, bullet_spawn_point.transform.rotation);
 
@@ -126,6 +135,8 @@ public class Player_ctrl : MonoBehaviour
     {
         if(collision.transform.tag == "Bullet")
         {
+            audios.clip = audio_hit;
+            audios.Play();
             PenetratingAlgorithm(penetrate_possibility, collision);
         }
     }
@@ -135,7 +146,9 @@ public class Player_ctrl : MonoBehaviour
         float x = Random.Range(0.0f, 1.0f);
         
         if(x<=possibility) // 도탄
+        {
             Instantiate(bullet_ricochet, collision.transform.position, collision.transform.rotation);
+        }
         else // 관통
         {
             Debug.Log("랜덤레인지의 x값 : " + x);
